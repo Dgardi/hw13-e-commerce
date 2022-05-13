@@ -10,30 +10,30 @@ router.get('/', (req, res) => {
   Tag.findAll({
     include:[{model: Product, through: ProductTag}]
   })
-    .then ((tag) => res.status(200).json(tag))
+    .then ((data) => res.json(data))
 });
 
 router.get('/:id', (req, res) => {
   // find a single tag by its `id`
   // be sure to include its associated Product data
-  Tag.update(req.body, {
-    where: {id: req.params.id,},
+  Tag.findOne(req.body, {
+    where: {id: req.params.id},
     include: [ {model: Product, through: ProductTag,}]
   })
-  .then((tag) => res.status(200).json(tag));
+  .then((data) => res.json(data));
 });
 
 router.post('/', (req, res) => {
   // create a new tag
   Tag.create(req.body)
-  .then((tag) => res.status(200).json(tag));
+  .then((data) => res.json(data));
 });
 
 router.put('/:id', (req, res) => {
   // update a tag's name by its `id` value
   Tag.update(req.body, {
     where: {id: req.params.id,},
-  }).then((tag) => res.status(200).json(tag))
+  }).then((data) => res.json(data))
 });
 
 router.delete('/:id', (req, res) => {
@@ -41,7 +41,7 @@ router.delete('/:id', (req, res) => {
   Tag.destroy({
     where: {id: req.params.id,},
   })
-  .then((tag) => res.status(200).json(tag))
+  .then((data) => res.json(data))
 });
 
 module.exports = router;
